@@ -1,0 +1,30 @@
+{
+  "name": "ioweyou backend",
+  "version": "1.0.0",
+  "description": "Swap debts, not friendships",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/i-oweyou/backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/i-oweyou/backend/issues"
+  },
+  "homepage": "https://github.com/i-oweyou/backend#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "express": "^5.1.0",
+    "firebase-admin": "^13.5.0",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
