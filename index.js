@@ -3,7 +3,6 @@ const app = express()
 const accountRoute = require('./routes/account')
 
 app.use(express.json())
-
 app.use('/account', accountRoute)
 
 app.listen(3000, () => {

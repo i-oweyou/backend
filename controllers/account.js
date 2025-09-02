@@ -1,4 +1,16 @@
-const accountService = require('../services/accountService')
+const accountServices = require('../services/account')
+const { signToken } = require('../services/auth')
+
+function buildAuthResponse(account) {
+  const safeAccount = {
+    id: account?.id,
+    name: account?.name,
+    username: account?.username,
+  }
+  const token = signToken(safeAccount)
+
+  return { account: safeAccount, token }
+}
 
 async function createAccount(req, res) {
   try {
@@ -6,8 +18,8 @@ async function createAccount(req, res) {
       return res.status(400).json({ error: 'Username is already taken' })
     }
 
-    const account = await accountService.createAccount(req.body)
-    res.status(201).json(account)
+    const account = await accountServices.createAccount(req.body)
+    res.status(201).json(buildAuthResponse(account))
   } catch (err) {
     res.status(500).json({ error: "It's NOT you, it's US. Sorry" })
   }
@@ -15,11 +27,12 @@ async function createAccount(req, res) {
 
 async function loginAccount(req, res) {
   try {
-    const account = await accountService.loginAccount(req.body)
+    const account = await accountServices.loginAccount(req.body)
     if (!account) {
       return res.status(401).json({ error: 'Invalid credentials' })
     }
-    res.status(200).json(account)
+
+    res.status(200).json(buildAuthResponse(account))
   } catch (err) {
     console.log(err)
     res.status(500).json({ error: "It's NOT you, it's US. Sorry" })
@@ -28,7 +41,7 @@ async function loginAccount(req, res) {
 
 async function uniqueUsername(username) {
   try {
-    const user = await accountService.getUserByUsername(username)
+    const user = await accountServices.getUserByUsername(username)
     return !user
   } catch (err) {
     return false
