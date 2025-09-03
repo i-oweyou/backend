@@ -5,6 +5,7 @@ function buildAuthResponse(account) {
   const safeAccount = {
     id: account?.id,
     name: account?.name,
+    gender: account?.gender,
     username: account?.username,
   }
   const token = signToken(safeAccount)
