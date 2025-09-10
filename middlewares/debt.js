@@ -16,7 +16,7 @@ function validateDebt(req, res, next) {
   if (paymentDateObj < createdAt)
     return res
       .status(400)
-      .json({ error: 'Payment date cannot be before the debt date' })
+      .json({ error: 'Payment date cannot be in the past' })
 
   next()
 }
