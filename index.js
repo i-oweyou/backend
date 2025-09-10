@@ -2,13 +2,15 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 const accountRoute = require('./routes/account')
+const debtRoute = require('./routes/debt')
 
-const allowedOrigins = ['http://localhost:5173', 'https://i-oweyou.web.app']
+const allowedOrigins = ['https://i-oweyou.web.app']
 
 app.use(express.json())
 app.use(cors({ origin: allowedOrigins, credentials: true }))
 
 app.use('/account', accountRoute)
+app.use('/debt', debtRoute)
 
 app.listen(3000, () => {
   console.log(
