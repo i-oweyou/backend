@@ -20,13 +20,7 @@ async function loginAccount(data) {
   return isValid ? user : null
 }
 
-async function getUserByUsername(username) {
-  const snapshot = await db
-    .collection('accounts')
-    .where('username', '==', username)
-    .get()
-
-  return snapshot.empty ? null : snapshot.docs[0].data()
+module.exports = {
+  createAccount,
+  loginAccount,
 }
-
-module.exports = { createAccount, loginAccount, getUserByUsername }
