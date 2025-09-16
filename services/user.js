@@ -1,11 +1,14 @@
 const admin = require('../database/init')
 const db = admin.firestore()
 
-async function getUserByUsername(username) {
+async function getUserDataByUsername(
+  username,
+  selectFields = ['id', 'name', 'username', 'gender']
+) {
   const snapshot = await db
     .collection('accounts')
     .where('username', '==', username)
-    .select('id', 'name', 'username', 'gender')
+    .select(...selectFields)
     .get()
 
   return snapshot.empty ? null : snapshot.docs[0].data()
@@ -25,6 +28,6 @@ async function searchUsersByUsername(username) {
 }
 
 module.exports = {
-  getUserByUsername,
+  getUserDataByUsername,
   searchUsersByUsername,
 }

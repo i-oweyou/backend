@@ -1,6 +1,7 @@
 const admin = require('../database/init')
-const { verify } = require('../utils/hashing')
 const db = admin.firestore()
+const { verify } = require('../utils/hashing')
+const { getUserDataByUsername } = require('./user')
 
 async function createAccount(data) {
   const docRef = db.collection('accounts').doc()
@@ -13,7 +14,13 @@ async function createAccount(data) {
 
 async function loginAccount(data) {
   const { username, password } = data
-  const user = await getUserByUsername(username)
+  const user = await getUserDataByUsername(username, [
+    'id',
+    'name',
+    'username',
+    'gender',
+    'password',
+  ])
   if (!user) return null
 
   const isValid = await verify(password, user.password)
