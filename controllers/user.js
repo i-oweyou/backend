@@ -1,10 +1,10 @@
 const userServices = require('../services/user')
 
-async function getUserByUsername(req, res) {
+async function getUserDataByUsername(req, res) {
   const { username } = req.params
 
   try {
-    const user = await userServices.getUserByUsername(username)
+    const user = await userServices.getUserDataByUsername(username)
     if (!user) return res.status(404).json({ error: 'User not found' })
 
     res.status(200).json(user)
@@ -27,4 +27,4 @@ async function searchUsersByUsername(req, res) {
   }
 }
 
-module.exports = { getUserByUsername, searchUsersByUsername }
+module.exports = { getUserDataByUsername, searchUsersByUsername }

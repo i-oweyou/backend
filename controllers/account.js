@@ -1,4 +1,5 @@
 const accountServices = require('../services/account')
+const userServices = require('../services/user')
 const { signToken } = require('../services/auth')
 
 function buildAuthResponse(account) {
@@ -41,7 +42,7 @@ async function loginAccount(req, res) {
 
 async function uniqueUsername(username) {
   try {
-    const user = await accountServices.getUserByUsername(username)
+    const user = await userServices.getUserDataByUsername(username)
     return !user
   } catch (err) {
     return false

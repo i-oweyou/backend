@@ -1,14 +1,5 @@
 const debtServices = require('../services/debt')
 
-function buildDebtResponse(debt) {
-  return {
-    debtId: debt.id,
-    borrowerId: debt.borrowerId,
-    status: debt.status,
-    createdAt: debt.createdAt,
-  }
-}
-
 async function giveDebt(req, res) {
   const { borrowerId, amount, description, paymentDate } = req.body
   const lenderId = req.user.id
@@ -26,10 +17,21 @@ async function giveDebt(req, res) {
 
   try {
     const debtRes = await debtServices.giveDebt(debt)
-    res.status(201).json(buildDebtResponse(debtRes))
+    res.status(201).json(debtRes)
   } catch (err) {
     res.status(500).json({ error: "It's NOT you, it's US. Sorry" })
   }
 }
 
-module.exports = { giveDebt }
+async function retrieveDebtRequests(req, res) {
+  const userId = req.user.id
+
+  try {
+    const debts = await debtServices.retrieveDebtRequests(userId)
+    res.status(200).json(debts)
+  } catch (err) {
+    res.status(500).json({ error: "It's NOT you, it's US. Sorry" })
+  }
+}
+
+module.exports = { giveDebt, retrieveDebtRequests }
