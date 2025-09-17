@@ -23,6 +23,33 @@ async function giveDebt(req, res) {
   }
 }
 
+async function setDebtStatus(debtId, status) {
+  const debt = await debtServices.setDebtStatus(debtId, status)
+  return debt
+}
+
+async function acceptDebt(req, res) {
+  const { debtId } = req.body
+
+  try {
+    const debt = await setDebtStatus(debtId, 'accepted')
+    res.status(200).json(debt)
+  } catch (err) {
+    res.status(500).json({ error: "It's NOT you, it's US. Sorry" })
+  }
+}
+
+async function rejectDebt(req, res) {
+  const { debtId } = req.body
+
+  try {
+    const debt = await setDebtStatus(debtId, 'rejected')
+    res.status(200).json(debt)
+  } catch (err) {
+    res.status(500).json({ error: "It's NOT you, it's US. Sorry" })
+  }
+}
+
 async function retrieveDebtRequests(req, res) {
   const userId = req.user.id
 
@@ -34,4 +61,4 @@ async function retrieveDebtRequests(req, res) {
   }
 }
 
-module.exports = { giveDebt, retrieveDebtRequests }
+module.exports = { giveDebt, acceptDebt, rejectDebt, retrieveDebtRequests }
