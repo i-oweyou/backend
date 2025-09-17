@@ -14,7 +14,7 @@ async function setDebtStatus(debtId, status) {
   const docRef = db.collection('debts').doc(debtId)
   await docRef.update({ status: status }, { exists: true })
 
-  return { debtId, status: status }
+  return { debtId, status }
 }
 
 async function retrieveDebtRequests(userId) {
