@@ -5,7 +5,7 @@ const accountRoute = require('./routes/account')
 const userRoute = require('./routes/user')
 const debtRoute = require('./routes/debt')
 
-const allowedOrigins = ['https://i-oweyou.web.app']
+const allowedOrigins = ['http://localhost:5173', 'https://i-oweyou.web.app']
 
 app.use(express.json())
 app.use(cors({ origin: allowedOrigins, credentials: true }))
