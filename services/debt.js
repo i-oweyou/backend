@@ -10,10 +10,18 @@ async function giveDebt(data) {
   return { id: docRef.id, ...snapshot.data() }
 }
 
+async function setDebtStatus(debtId, status) {
+  const docRef = db.collection('debts').doc(debtId)
+  await docRef.update({ status: status }, { exists: true })
+
+  return { debtId, status }
+}
+
 async function retrieveDebtRequests(userId) {
   const snapshot = await db
     .collection('debts')
     .where('borrowerId', '==', userId)
+    .where('status', '==', 'pending')
     .select(
       'id',
       'borrowerId',
@@ -29,4 +37,4 @@ async function retrieveDebtRequests(userId) {
   return snapshot.empty ? [] : snapshot.docs.map((doc) => doc.data())
 }
 
-module.exports = { giveDebt, retrieveDebtRequests }
+module.exports = { giveDebt, setDebtStatus, retrieveDebtRequests }
